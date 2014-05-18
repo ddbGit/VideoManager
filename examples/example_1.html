@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>VideoManager Example</title>
+</head>
+<body>
+  <p>To see status of code, open the console.</p>
+
+  <div id="video_1"></div>
+  <a href="#" onclick="changeContent( 'videoInstance1' ); return false;">Change video 1</a>
+
+  <hr />
+
+  <div id="video_2"></div>
+  <a href="#" onclick="changeContent( 'videoInstance2' ); return false;">Change video 2</a>
+
+  <script src="VideoManager.1.4.0.js"></script>
+  <script>
+    // Step-up each instance
+    var videoInstance1 = VideoManager( {
+          elm      : document.getElementById( 'video_1' ),
+          width    : '480',
+          height   : '285',
+          autoPlay : true,
+          idNamePrefix : 'media_',
+          poster   : {
+            url   : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video1.jpg',
+            title : 'This is title vid1',
+            alt   : 'This is alt vid1'
+          },
+          video    : {
+            mp4  : { url : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video1.mp4' },
+            webm : { url : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video1.webm' },
+            ogg  : { url : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video1.ogv' }
+          },
+          onPlayback : {
+            during : function ( elm ) {
+              // Do something while playing video
+              console.warn('video 1 Millieseconds:', elm.currentTime );
+            },
+            ended : function ( ) {
+              // Do something when video has ended
+              console.warn('video 1 ended');
+            },
+            notSupported : function ( ) {
+              // Do something if video is not supported for browser
+              console.warn('video 1 Not Supported' );
+            }
+          }
+        } ),
+        videoInstance2 = VideoManager( {
+          elm      : document.getElementById( 'video_2' ),
+          width    : '480',
+          height   : '285',
+          autoPlay : true,
+          poster   : {
+            url   : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video2.jpg',
+            title : 'This is title vid2',
+            alt   : 'This is alt vid2'
+          },
+          video    : {
+            mp4  : { url : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video2.mp4' },
+            webm : { url : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video2.webm' },
+            ogg  : { url : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video2.ogv' }
+          },
+          onPlayback : {
+            during : function ( elm ) {
+              // Do something while playing video
+              console.info('video 2 Millieseconds:', elm.currentTime );
+            },
+            ended : function ( ) {
+              // Do something when video has ended
+              console.info('video 2 ended');
+            },
+            notSupported : function ( ) {
+              // Do something if video is not supported for browser
+              console.info('video 2 Not Supported' );
+            }
+          }
+        } );
+
+    function changeContent( vidInst ) {
+      var consoleType = { videoInstance1 : 'warn', videoInstance2 : 'info' },
+          videoRef = vidInst === 'videoInstance1' ? '2' : '1';
+
+      window[ vidInst ].change( {
+        poster   : {
+          url   : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video' + videoRef + '.jpg',
+          title : 'This is title ' + vidInst,
+          alt   : 'This is alt ' + vidInst
+        },
+        video    : {
+          mp4  : { url : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video' + videoRef + '.mp4' },
+          webm : { url : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video' + videoRef + '.webm' },
+          ogg  : { url : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video' + videoRef + '.ogv' }
+        },
+        onPlayback : {
+          during : function ( elm ) {
+            // Do something while playing video
+            console[ consoleType[ vidInst ] ]( 'change() ', vidInst, 'Millieseconds:', elm.currentTime);
+          },
+          ended  : function ( ) {
+            // Do something when video has ended
+            console[ consoleType[ vidInst ] ]( 'change() ', vidInst + ' ended');
+          },
+          notSupported : function ( ) {
+            // Do something if video is not supported for browser
+            console[ consoleType[ vidInst ] ]( 'change() ', vidInst, ' Not Supported' );
+          }
+        }
+      } );
+    }
+
+    // Access to the video intance of the element
+    console.warn( 'Video Instance 1 element:\n', videoInstance1.getElm() )
+    console.info( 'Video Instance 2 element:\n', videoInstance2.getElm() );
+  </script>
+</body>
+</html>

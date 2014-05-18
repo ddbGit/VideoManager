@@ -1,0 +1,24 @@
+{
+  "name": "VideoManager",
+  "description": "Creates html `video` tag with `source` and or `img` tag with public methods for instance.",
+  "version": "1.4.0",
+  "author": {
+    "name": "Dean Dal Bozzo",
+    "email": "dean@pagefx.com"
+  },
+  "company":"PageFX.com",
+  "homepage": "http://pagefx.com",
+  "main": "VideoManager.js",
+  "licenses": {
+    "type": "MIT",
+    "url": "https://raw.github.com/ddbGit/VideoManager/master/LICENSE"
+  },
+  "bugs": "https://github.com/ddbGit/VideoManager/issues",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ddbGit/VideoManager.git"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5"
+  }
+}
