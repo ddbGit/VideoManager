@@ -1,12 +1,27 @@
 module.exports = function ( grunt ) {
+  'use strict';
+
+  var pkgJSON = grunt.file.readJSON( 'package.json' );
+
   grunt.initConfig( {
-    pkg      : grunt.file.readJSON( 'package.json' ),
+    pkg      : pkgJSON,
+    copyYear : ( function ( ) {
+      var copyText  = '',
+          startYear = +pkgJSON.startYear,
+          thisYear  = +new Date().getFullYear();
+
+      if ( thisYear > startYear ) {
+        copyText = startYear + ' - ';
+      }
+
+      return copyText + thisYear;
+    }( ) ),
     srcPath  : 'src/*.js',
     distPath : 'dist/<%= pkg.name %>.<%= pkg.version %>.',
     banner   : '/* <%= pkg.title || pkg.name %> - v<%= pkg.version %>\n' +
       ' * <%= pkg.description %>\n' +
       '<%= pkg.homepage ? " * " + pkg.homepage + "\\n" : "" %>' +
-      ' * Copyright <%= grunt.template.today("yyyy") %>, <%= pkg.company %>\n' +
+      ' * Copyright (c) <%= copyYear %>, <%= pkg.company %>\n' +
       ' * Free to use under the <%= pkg.licenses.type %> license.\n' +
       ' * <%= pkg.licenses.url %>\n' +
       ' *\n' +

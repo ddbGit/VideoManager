@@ -1,11 +1,11 @@
 /* VideoManager - v1.4.0
  * Creates html `video` tag with `source` and or `img` tag with public methods for instance.
  * http://pagefx.com
- * Copyright 2014, PageFX.com
+ * Copyright (c) 2014, PageFX.com
  * Free to use under the MIT license.
- * https://raw.github.com/ddbGit/VideoManager/master/LICENSE
+ * https://raw.github.com/ddbGit/VideoManager/master/LICENSE.md
  *
- * Build: Sunday, May 18th, 2014, 17:25:38 GMT
+ * Build: Wednesday, May 21st, 2014, 01:49:52 GMT
  */
 
 

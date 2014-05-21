@@ -7,11 +7,12 @@
     "email": "dean@pagefx.com"
   },
   "company":"PageFX.com",
+  "startYear":"2014",
   "homepage": "http://pagefx.com",
   "main": "VideoManager.js",
   "licenses": {
     "type": "MIT",
-    "url": "https://raw.github.com/ddbGit/VideoManager/master/LICENSE"
+    "url": "https://raw.github.com/ddbGit/VideoManager/master/LICENSE.md"
   },
   "bugs": "https://github.com/ddbGit/VideoManager/issues",
   "repository": {
