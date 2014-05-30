@@ -1,7 +1,7 @@
 {
   "name": "VideoManager",
-  "description": "Creates html `video` tag with `source` and or `img` tag with public methods for instance.",
-  "version": "1.4.0",
+  "description": "Creates html `video` tag with `source` and or `img` tag with methods for each instance. Auto Constructor (no need to use `new` keyword), to create instance Appends DOM `video` tag to specified element in the DOM. And includes methods for each instance.",
+  "version": "1.4.1",
   "author": {
     "name": "Dean Dal Bozzo",
     "email": "dean@pagefx.com"
@@ -12,7 +12,7 @@
   "main": "VideoManager.js",
   "licenses": {
     "type": "MIT",
-    "url": "https://raw.github.com/ddbGit/VideoManager/master/LICENSE.md"
+    "url": "https://github.com/ddbGit/VideoManager/blob/master/LICENSE.md"
   },
   "bugs": "https://github.com/ddbGit/VideoManager/issues",
   "repository": {

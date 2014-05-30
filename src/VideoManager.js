@@ -1,28 +1,5 @@
-// -------------
-//## Auto Constructor
-/**
- * Description: VideoManager, Auto Constructor (no need to use `new` keyword), to create instance
- * Appends DOM `video` tag to specified element in the DOM. And includes public methods for instance.
- *
- * @public
- *
- * @return {Object} new object instance
- */
 VideoManager = ( function ( ) {
-  // -------------
-  //### Private
-
   var doc = document,
-
-      /**
-       * setElmAttributes
-       *
-       * @private
-       *
-       * @param {Element} elm: elm to attach attribute to
-       * @param {String} name: attribute name
-       * @param {String} value: value for attribute
-       */
       setElmAttributes = function ( elm, name, value ) {
         var propFix = {
               'tabindex'        : 'tabIndex',
@@ -55,17 +32,6 @@ VideoManager = ( function ( ) {
           }
         }
       },
-
-      /**
-       * makeElement
-       *
-       * @private
-       *
-       * @param {String} nodeName: name of node
-       * @param {Object} opts: options for node
-       *
-       * @return {Element}
-       */
       makeElement = function ( nodeName, opts ) {
         var i    = 0,
             p    = '',
@@ -90,14 +56,7 @@ VideoManager = ( function ( ) {
         }
         return elm;
       },
-
-      /**
-       * Collection of file types
-       *
-       * @private
-       *
-       * @return {Object}
-       */
+      // Collection of file types
       getFileTypes = function ( ) {
         return {
           ogg  : { mimeType : 'video/ogg',  canPlayType : 'video/ogg; codecs="theora, vorbis"' },
@@ -105,107 +64,41 @@ VideoManager = ( function ( ) {
           mp4  : { mimeType : 'video/mp4',  canPlayType : 'video/mp4; codecs="avc1.4D401E, mp4a.40.2"' }
         };
       },
-
-      /**
-       * Get Id name
-       *
-       * @private
-       *
-       * @param {String} idNamePrefix: id name prefix
-       * @param {String} suffix: suffix for id name
-       *
-       * @return {String}
-       */
       getIdName = function ( idNamePrefix, suffix ) {
         return idNamePrefix ? idNamePrefix + suffix : '';
       },
-
-      /**
-       * Check if callback is a function
-       *
-       * @private
-       *
-       * @param {Function} callback: function for callback
-       *
-       * @return {Function}
-       */
       isCallback = function( callback ) {
         return ( typeof callback === 'function' ) ? callback : function ( ) { };
       },
-
-      /**
-       * Check if browser supports `video` tag
-       *
-       * @private
-       *
-       * @param {DOM Element} element: video element
-       *
-       * @return {Boolean}
-       */
+      // Check if browser supports `video` tag
       isVideoSupported = function ( elm ) {
         return !!elm.canPlayType; // !! used so we get a Boolean value
       },
-
-      /**
-       * Set's `video` tag attribute `autoplay` value
-       *
-       * @private
-       *
-       * @param {DOM Element} element: video element
-       * @param {Boolean} play: `true` will set attribute and value.
-       */
+      // Set's `video` tag attribute `autoplay` value
       autoPlay = function ( elm, play ) {
         if ( play ) {
           elm.autoplay = true;
         }
       },
-
-      /**
-       * Set's `video` tag attribute `loop` value
-       *
-       * @private
-       *
-       * @param {DOM Element} element: video element
-       * @param {Boolean} loop: `true` will set attribute and value.
-       */
+      // Set's `video` tag attribute `loop` value
       loop = function ( elm, doLoop ) {
         if ( doLoop ) {
           elm.loop = true;
         }
       },
-
-      /**
-       * Reset timer
-       *
-       * @private
-       */
+      // Reset timer
       resetVideoPlaying = function ( ) {
         clearInterval( this.videoPlaying );
         this.videoPlaying = null;
       },
-
-      /**
-       * Check if source is at end and fire callback
-       *
-       * @private
-       *
-       * @param {DOM Element Property} ended: `video` property `ended`
-       * @param {Function} fnEnded: callback function to fire when source is reached the end
-       */
+      // Check if source is at end and fire callback
       playHeadAtEnd = function ( ended, fnEnded ) {
         if ( ended ) {
           resetVideoPlaying.call( this );
           fnEnded();
         }
       },
-
-      /**
-       * Check if source is has started and fire callback
-       *
-       * @private
-       *
-       * @param {Function} callback: callback function to fire when source has started
-       */
+      // Check if source is has started and fire callback
       startPlayback = function ( callback ) {
         var that         = this,
             elmVid       = this.elmVid,
@@ -225,28 +118,41 @@ VideoManager = ( function ( ) {
       },
 
       /**
-       * Builds HTML `video` tag and child tags and append to specified element in the DOM.
+       * @typedef cfg
+       * @type {object}
        *
-       * @private
-       *
-       * @param {Object} cfg: configuration values
-       *
-       * Configuration
-       * @param {DOM element} elm: DOM element to attach `video` tag to.
-       * @param {String} width: pixel width of source.
-       * @param {String} height: pixel height of source.
-       * @param {Boolean} loop: `true` will loop source when finished.
-       * @param {Boolean} autoplay: `true` will start playing source when available.
-       * @param {String} video.mp4.url: URL to source file.
-       * @param {String} video.ogg.url: URL to source file.
-       * @param {String} video.webm.url: URL to source file.
-       * @param {String} poster.url: URL to source file.
-       * @param {String} poster.alt: text for `img` tag `alt` attribute.
-       * @param {String} poster.title: text for `img` tag `title` attribute.
-       * @param {String} idNamePrefix: Element `id` name prefix to use when adding `source` or `img` tags.  Will append the media type, to the id name
-       * @param {Function} onPlayback.during: Called every 250 milliseconds while source is playing. ( Passes back `video` elm instance. )
-       * @param {Function} onPlayback.ended: Called when source has ended.
-       * @param {Function} onPlayback.notSupported: Called when browser does not support `video` tag ( Passes back `source` elm instance. )
+       * @property {element} elm: DOM element to attach `video` tag to.
+       * @property {string} width: pixel width of source.
+       * @property {string} height: pixel height of source.
+       * @property {boolean} loop: `true` will loop source when finished.
+       * @property {boolean} autoplay: `true` will start playing source when available.
+       * @property {string} video.mp4.url: URL to source mp4 file.
+       * @property {string} video.ogg.url: URL to source (ogg|ogv) file.
+       * @property {string} video.webm.url: URL to source webm file.
+       * @property {string} poster.url: URL to source file.
+       * @property {string} poster.alt: text for `img` tag `alt` attribute.
+       * @property {string} poster.title: text for `img` tag `title` attribute.
+       * @property {string} idNamePrefix: Element `id` name prefix to use when adding `source` or `img` tags.  Will append the media type, to the id name
+       * @property {callback-during} onPlayback.during: Called every 250 milliseconds while `source` is playing.
+       * @property {callback-ended} onPlayback.ended: Called when `source` has ended.
+       * @property {callback-notSupported} onPlayback.notSupported: Called when browser does not support `video` tag.
+       */
+
+      /**
+       * Called every 250 milliseconds while source is playing.
+       * @callback callback-during
+       * @param {element} elm DOM element instance of `source`
+       */
+
+      /**
+       * Called when source has ended.
+       * @callback callback-ended
+       */
+
+      /**
+       * Called when browser does not support `video` tag
+       * @callback callback-notSupported
+       * @return {element} DOM element instance of `source`
        */
       build = function ( cfg ) {
         var elmSource    = this.elmSource,
@@ -297,14 +203,6 @@ VideoManager = ( function ( ) {
 
         }
       },
-
-      /**
-       * Create instance
-       *
-       * @private
-       *
-       * @return {Object} new object instance
-       */
       VideoObj = function ( cfg ) {
         this.elmVid       = makeElement( 'video' );
         this.elmImg       = {};
@@ -314,24 +212,58 @@ VideoManager = ( function ( ) {
         build.call( this, cfg );
       };
 
-  // -------------
-  //### Public
+  /**
+   * @memberof module:VideoManager
+   * @alias module:VideoManager.prototype
+   */
   VideoObj.prototype = {
     /**
-     * Description: Changes source file(s)
+     * @typedef change/cfg
+     * @type {object}
      *
-     * @public
+     * @property {boolean} loop: `true` will loop source when finished.
+     * @property {boolean} autoplay: `true` will start playing source when available.
+     * @property {string} video.mp4.url: URL to source file.
+     * @property {string} video.ogg.url: URL to source file.
+     * @property {string} video.webm.url: URL to source file.
+     * @property {string} poster.url: URL to source file.
+     * @property {string} poster.alt: text for `img` tag `alt` attribute.
+     * @property {string} poster.title: text for `img` tag `title` attribute.
+     * @property {callback-during} onPlayback.during: Called every 25 milliseconds while source is playing.
+     * @property {callback-ended} onPlayback.ended: Called when source has ended.
+     */
+
+    /**
+     * change Changes source file
+     * @param  { change/cfg } cfg configuration object
      *
-     * @param {Boolean} loop: `true` will loop source when finished.
-     * @param {Boolean} autoplay: `true` will start playing source when available.
-     * @param {String} video.mp4.url: URL to source file.
-     * @param {String} video.ogg.url: URL to source file.
-     * @param {String} video.webm.url: URL to source file.
-     * @param {String} poster.url: URL to source file.
-     * @param {String} poster.alt: text for `img` tag `alt` attribute.
-     * @param {String} poster.title: text for `img` tag `title` attribute.
-     * @param {Function} onPlayback.during: Called every 25 milliseconds while source is playing.
-     * @param {Function} onPlayback.ended: Called when source has ended.
+     * @example <caption>Change configuration</caption>
+     * videoInstance.change( {
+     *   poster   : {
+     *     url   : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video2.jpg',
+     *     title : 'This is title text.',
+     *     alt   : 'This is alt text.'
+     *   },
+     *   video    : {
+     *     mp4  : { url : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video2.mp4' },
+     *     webm : { url : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video2.webm' },
+     *     ogg  : { url : 'http://pagefx.com/ddbGit/videoManager/Examples/assests/video2.ogv' }
+     *   },
+     *   onPlayback : {
+     *     during : function ( elm ) {
+     *       // Do something while playing video
+     *       console.log( 'change() ', 'Millieseconds:', elm.currentTime);
+     *     },
+     *     ended  : function ( ) {
+     *       // Do something when video has ended
+     *       console.log( 'change() ',' ended');
+     *     },
+     *     notSupported : function ( ) {
+     *       // Do something if video is not supported for browser
+     *       console.log( 'change() ',' Not Supported' );
+     *     }
+     *   }
+     * } );
      */
     change : function ( cfg ) {
       var elmVid       = this.elmVid,
@@ -395,9 +327,9 @@ VideoManager = ( function ( ) {
     },
 
     /**
-     * Stop playback of source
-     *
-     * @public
+     * stopPlayback Stop playback of source
+     * @example
+     * videoInstance.stopPlayback();
      */
     stopPlayback  : function ( ) {
       var elmVid = this.elmVid;
@@ -409,11 +341,12 @@ VideoManager = ( function ( ) {
     },
 
     /**
-     * Get's instance of DOM element
+     * getElm Get's instance of DOM `video` element
      *
-     * @public
+     * @return {element} Instance of DOM `video` element
      *
-     * @return {Object} Instance of DOM object element
+     * @example
+     * videoInstance.getElm();
      */
     getElm : function ( ) {
       var elmVid = this.elmVid;

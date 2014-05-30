@@ -1,2 +1,10 @@
 .DS_Store
+# Development-related files
 node_modules
+
+# Examples
+examples/
+
+# Generated files
+dist/
+docs/
